@@ -65,7 +65,6 @@ function updateChannel() {
 
             const og_rName = raisedChannel.name;
             const og_gName = goalChannel.name;
-            console.log(JSON.stringify(data));
             if (og_rName !== raisedString) {
                 raisedChannel.setName(raisedString);
             }
