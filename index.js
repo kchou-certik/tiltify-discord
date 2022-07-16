@@ -56,21 +56,25 @@ setInterval(updateChannel, 20000);
 
 function updateChannel() {
     if (!raisedChannel || !goalChannel) return;
+    try {
+        campaign.get("171802", async function (data) {
+            const raised = dollarify.format(data.totalAmountRaised);
+            const goal = dollarify.format(data.fundraiserGoalAmount);
+            const raisedString = `RAISED: $${raised}`;
+            const goalString = `GOAL: $${goal}`;
 
-    campaign.get("171802", async function (data) {
-        const raised = dollarify.format(data.totalAmountRaised);
-        const goal = dollarify.format(data.fundraiserGoalAmount);
-        const raisedString = `RAISED: $${raised}`;
-        const goalString = `GOAL: $${goal}`;
-
-        const og_rName = raisedChannel.name;
-        const og_gName = goalChannel.name;
-        console.log(JSON.stringify(data));
-        if (og_rName !== raisedString) {
-            raisedChannel.setName(raisedString);
-        }
-        if (og_gName !== goalString) {
-            goalChannel.setName(goalString);
-        }
-    });
+            const og_rName = raisedChannel.name;
+            const og_gName = goalChannel.name;
+            console.log(JSON.stringify(data));
+            if (og_rName !== raisedString) {
+                raisedChannel.setName(raisedString);
+            }
+            if (og_gName !== goalString) {
+                goalChannel.setName(goalString);
+            }
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
 }
